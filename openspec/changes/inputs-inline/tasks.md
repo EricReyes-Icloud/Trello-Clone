@@ -30,23 +30,23 @@ Chain strategy: feature-branch-chain
 ## Phase 1: Core UI Refactoring (Card Edit)
 
 ### Card Edit Implementation
-- [ ] **1.1** Replace `<input>` with `<textarea>` in `src/components/cards/card.jsx`:
+- [x] **1.1** Replace `<input>` with `<textarea>` in `src/components/cards/card.jsx`:
   - Add `textarea-auto` CSS class for auto-resize using `scrollHeight`.
   - Bind `onChange` to update textarea value and trigger auto-resize.
   - Add `Save` and `Cancel` buttons below the textarea.
 
-- [ ] **1.2** Implement `Ctrl+Enter` save logic in `src/components/cards/card.jsx`:
+- [x] **1.2** Implement `Ctrl+Enter` save logic in `src/components/cards/card.jsx`:
   - Prevent default `Enter` behavior (keep native newlines).
   - Add `onKeyDown` handler for `Ctrl+Enter` to dispatch `EDIT_CARD` action.
 
-- [ ] **1.3** Add success feedback CSS in `src/App.css`:
+- [x] **1.3** Add success feedback CSS in `src/App.css`:
   - Define `.feedback-success` for green border animation (0.5s).
   - Apply class on save via `setTimeout` cleanup.
 
-- [ ] **1.4** Ensure Escape key cancels edit in `src/components/cards/card.jsx`:
+- [x] **1.4** Ensure Escape key cancels edit in `src/components/cards/card.jsx`:
   - Add `onKeyDown` handler for `Escape` to restore original text and exit edit mode.
 
-- [ ] **1.5** Add ARIA attributes for accessibility:
+- [x] **1.5** Add ARIA attributes for accessibility:
   - Label textarea with `aria-label="Edit card text"`.
   - Label buttons with `aria-label="Save"` and `aria-label="Cancel"`.
 
