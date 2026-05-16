@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useRef, useEffect } from "react";
 import { BoardContext } from "../../context/boardContext";
 import List from "../lists/list";
 
@@ -6,6 +6,7 @@ function Board() {
   const { state, dispatch } = useContext(BoardContext);
   const [isAddingList, setIsAddingList] = useState(false);
   const [newListTitle, setNewListTitle] = useState("");
+  const addListInputRef = useRef(null);
 
   const handleAddList = () => {
     if (!newListTitle.trim()) return;
@@ -28,6 +29,13 @@ function Board() {
     }
   };
 
+  // Focus add list input when it appears
+  useEffect(() => {
+    if (isAddingList && addListInputRef.current) {
+      addListInputRef.current.focus();
+    }
+  }, [isAddingList]);
+
   return (
     <div className="board">
       {state.lists.map((list) => (
@@ -37,15 +45,18 @@ function Board() {
       <div className="add-list-container">
         {isAddingList ? (
           <input
+            ref={addListInputRef}
             type="text"
             className="add-list-input"
             value={newListTitle}
             onChange={(e) => setNewListTitle(e.target.value)}
             onKeyDown={handleKeyDown}
             onBlur={() => {
-              if (!newListTitle.trim()) setIsAddingList(false);
+              setIsAddingList(false);
+              setNewListTitle("");
             }}
             placeholder="Nombre de la lista"
+            aria-label="Add new list"
             autoFocus
           />
         ) : (

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useRef, useEffect } from "react";
 import { BoardContext } from "../../context/boardContext";
 import Card from "../cards/card";
 
@@ -8,6 +8,8 @@ function List({ list }) {
   const [newCardText, setNewCardText] = useState("");
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [editTitle, setEditTitle] = useState(list.title);
+  const titleInputRef = useRef(null);
+  const addCardInputRef = useRef(null);
 
   const handleAddCard = () => {
     if (!newCardText.trim()) return;
@@ -40,12 +42,16 @@ function List({ list }) {
     setIsEditingTitle(false);
   };
 
+  const handleCancelTitle = () => {
+    setEditTitle(list.title);
+    setIsEditingTitle(false);
+  };
+
   const handleTitleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleSaveTitle();
     } else if (e.key === "Escape") {
-      setEditTitle(list.title);
-      setIsEditingTitle(false);
+      handleCancelTitle();
     }
   };
 
@@ -58,17 +64,34 @@ function List({ list }) {
     }
   };
 
+  // Focus and select all text when entering title edit mode
+  useEffect(() => {
+    if (isEditingTitle && titleInputRef.current) {
+      titleInputRef.current.focus();
+      titleInputRef.current.select();
+    }
+  }, [isEditingTitle]);
+
+  // Focus add card input when it appears
+  useEffect(() => {
+    if (isAddingCard && addCardInputRef.current) {
+      addCardInputRef.current.focus();
+    }
+  }, [isAddingCard]);
+
   return (
     <div className="list">
       <div className="list-header">
         {isEditingTitle ? (
           <input
+            ref={titleInputRef}
             type="text"
             className="list-title-input"
             value={editTitle}
             onChange={(e) => setEditTitle(e.target.value)}
             onKeyDown={handleTitleKeyDown}
-            onBlur={handleSaveTitle}
+            onBlur={handleCancelTitle}
+            aria-label="Edit list title"
             autoFocus
           />
         ) : (
@@ -79,7 +102,11 @@ function List({ list }) {
             >
               {list.title}
             </h3>
-            <button className="btn-list-delete" onClick={deleteList}>
+            <button 
+              className="btn-list-delete" 
+              onClick={deleteList}
+              aria-label="Delete list"
+            >
               ✕
             </button>
           </>
@@ -92,15 +119,18 @@ function List({ list }) {
 
       {isAddingCard ? (
         <input
+          ref={addCardInputRef}
           type="text"
           className="inline-input"
           value={newCardText}
           onChange={(e) => setNewCardText(e.target.value)}
           onKeyDown={handleKeyDown}
           onBlur={() => {
-            if (!newCardText.trim()) setIsAddingCard(false);
+            setIsAddingCard(false);
+            setNewCardText("");
           }}
           placeholder="Escribe y presiona Enter"
+          aria-label="Add new card"
           autoFocus
         />
       ) : (
