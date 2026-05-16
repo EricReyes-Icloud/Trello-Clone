@@ -55,25 +55,25 @@ Chain strategy: feature-branch-chain
 ## Phase 2: List Title & Add Inputs Enhancement
 
 ### List Title Edit
-- [ ] **2.1** Update `src/components/lists/list.jsx` for list title edit:
+- [x] **2.1** Update `src/components/lists/list.jsx` for list title edit:
   - Add `autoFocus` and `selectAll` to input on edit mode.
   - Ensure blur cancels edit (restore original title).
 
-- [ ] **2.2** Keep delete button visible during edit in `src/components/lists/list.jsx`:
+- [x] **2.2** Keep delete button visible during edit in `src/components/lists/list.jsx`:
   - Ensure button remains rendered and functional.
 
-- [ ] **2.3** Add ARIA attributes for list title input:
+- [x] **2.3** Add ARIA attributes for list title input:
   - Label input with `aria-label="Edit list title"`.
   - Label delete button with `aria-label="Delete list"`.
 
 ### Add Card & Add List Inputs
-- [ ] **2.4** Enhance focus visibility in `src/components/lists/list.jsx`:
+- [x] **2.4** Enhance focus visibility in `src/components/lists/list.jsx`:
   - Update add-card input CSS to use `focus-visible` for clearer focus state.
 
-- [ ] **2.5** Ensure blur cancels add inputs in `src/components/lists/list.jsx`:
+- [x] **2.5** Ensure blur cancels add inputs in `src/components/lists/list.jsx`:
   - Add `onBlur` handlers to close inputs without side effects.
 
-- [ ] **2.6** Add ARIA attributes for add inputs:
+- [x] **2.6** Add ARIA attributes for add inputs:
   - Label add-card input with `aria-label="Add new card"`.
   - Label add-list input with `aria-label="Add new list"`.
 
