@@ -1,0 +1,43 @@
+# OpenSpec Configuration — Trello-clone
+
+schema: spec-driven
+
+context: |
+  Tech stack: React 19.2.5, Vite 8.0.10, JavaScript ES6+
+  Architecture: Board → List → Card, Context API + useReducer
+  Testing: NONE (no test framework installed)
+  Style: CSS modular
+  Persistence: openspec mode
+
+strict_tdd: false
+
+testing:
+  runner: null
+  framework: null
+  coverage: false
+  unit: false
+  integration: false
+  e2e: false
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+  specs:
+    - Use Given/When/Then for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+  design:
+    - Include sequence diagrams for complex flows
+    - Document architecture decisions with rationale
+  tasks:
+    - Group by phase, use hierarchical numbering
+    - Keep tasks completable in one session
+  apply:
+    - Follow existing code patterns
+    tdd: false
+    test_command: ""
+  verify:
+    test_command: ""
+    build_command: "npm run build"
+    coverage_threshold: 0
+  archive:
+    - Warn before merging destructive deltas

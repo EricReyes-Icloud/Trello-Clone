@@ -339,6 +339,179 @@
 }
 
 /* =============================================
+   BUTTON HIERARCHY — primary / secondary / danger
+   ============================================= */
+
+.btn-primary {
+  background: var(--focus-ring);
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background: #d4a820;
+  color: #1a1a1a;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  background: var(--hover-bg);
+  color: var(--text);
+}
+
+.btn-danger {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.btn-danger:hover {
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+}
+
+/* =============================================
+   TOAST — notification system
+   ============================================= */
+
+.toast-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 360px;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  box-shadow: var(--shadow-lg);
+  border-left: 4px solid var(--focus-ring);
+  animation: toast-in 0.3s ease;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.toast-message {
+  flex: 1;
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.toast-undo-btn {
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+
+/* =============================================
+   CONTEXTUAL TOOLBAR — card actions
+   ============================================= */
+
+.toolbar {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 10;
+}
+
+.toolbar-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  transition: background 0.15s, color 0.15s;
+}
+
+.toolbar-trigger:hover {
+  background: var(--hover-bg);
+  color: var(--text);
+}
+
+.toolbar-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 4px;
+  min-width: 140px;
+  background: #fff;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  z-index: 20;
+}
+
+.toolbar-menu-item {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  background: transparent;
+  font-family: var(--font);
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s;
+}
+
+.toolbar-menu-item:hover {
+  background: var(--hover-bg);
+}
+
+.toolbar-menu-item--danger {
+  color: #ef4444;
+}
+
+.toolbar-menu-item--danger:hover {
+  background: rgba(239, 68, 68, 0.08);
+  color: #dc2626;
+}
+
+/* =============================================
+   FEEDBACK — success state extension
+   ============================================= */
+
+.feedback-success {
+  border-color: #22c55e !important;
+  transition: border-color 0.3s ease;
+}
+
+/* =============================================
    SCROLLBAR — subtle dark scroll
    ============================================= */
 
