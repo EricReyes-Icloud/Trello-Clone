@@ -1,9 +1,11 @@
 import { useContext, useState, useRef, useEffect } from "react";
 import { BoardContext } from "../../context/boardContext";
+import { useToast } from "../../context/ToastContext";
 import Card from "../cards/card";
 
 function List({ list }) {
   const { dispatch } = useContext(BoardContext);
+  const { addToast } = useToast();
   const [isAddingCard, setIsAddingCard] = useState(false);
   const [newCardText, setNewCardText] = useState("");
   const [isEditingTitle, setIsEditingTitle] = useState(false);
@@ -56,12 +58,30 @@ function List({ list }) {
   };
 
   const deleteList = () => {
-    if (confirm("¿Eliminar esta lista?")) {
-      dispatch({
-        type: "DELETE_LIST",
-        payload: { id: list.id }
-      });
-    }
+    // Dispatch DELETE_LIST — moves list to pendingDeletion in reducer
+    dispatch({
+      type: "DELETE_LIST",
+      payload: { id: list.id }
+    });
+
+    // Show toast with undo option
+    addToast({
+      message: "Lista eliminada",
+      undoAvailable: true,
+      onUndo: () => {
+        dispatch({
+          type: "RESTORE_LIST",
+          payload: { id: list.id }
+        });
+      },
+      onTimeout: () => {
+        // Confirms permanent deletion after 5s
+        dispatch({
+          type: "CONFIRM_DELETION",
+          payload: { id: list.id }
+        });
+      }
+    });
   };
 
   // Focus and select all text when entering title edit mode
@@ -102,8 +122,8 @@ function List({ list }) {
             >
               {list.title}
             </h3>
-            <button 
-              className="btn-list-delete" 
+            <button
+              className="btn-list-delete btn-danger"
               onClick={deleteList}
               aria-label="Delete list"
             >
@@ -135,7 +155,7 @@ function List({ list }) {
         />
       ) : (
         <button
-          className="btn btn-add"
+          className="btn btn-add btn-primary"
           onClick={() => setIsAddingCard(true)}
         >
           + Añadir tarjeta

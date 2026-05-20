@@ -1,8 +1,11 @@
 import { useContext, useState, useRef, useEffect } from "react";
 import { BoardContext } from "../../context/boardContext";
+import { useToast } from "../../context/ToastContext";
+import ContextualToolbar from "../ui/ContextualToolbar";
 
 function Card({ card, listId }) {
   const { dispatch } = useContext(BoardContext);
+  const { addToast } = useToast();
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(card.text);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -25,7 +28,7 @@ function Card({ card, listId }) {
       type: "EDIT_CARD",
       payload: { listId, cardId: card.id, text: editText.trim() }
     });
-    
+
     // Show success feedback
     setShowSuccess(true);
     setTimeout(() => {
@@ -59,11 +62,15 @@ function Card({ card, listId }) {
     }
   }, [isEditing]);
 
-  const deleteCard = (e) => {
-    e.stopPropagation();
+  const handleDeleteCard = () => {
     dispatch({
       type: "DELETE_CARD",
       payload: { listId, cardId: card.id }
+    });
+
+    addToast({
+      message: "Tarjeta eliminada",
+      undoAvailable: false
     });
   };
 
@@ -84,14 +91,14 @@ function Card({ card, listId }) {
             onClick={(e) => e.stopPropagation()}
           />
           <div className="edit-buttons">
-            <button 
+            <button
               className="btn-save"
               onClick={handleSaveEdit}
               aria-label="Save"
             >
               Guardar
             </button>
-            <button 
+            <button
               className="btn-cancel"
               onClick={handleCancelEdit}
               aria-label="Cancel"
@@ -103,9 +110,10 @@ function Card({ card, listId }) {
       ) : (
         <>
           <p className="card-text">{card.text}</p>
-          <button className="card-delete" onClick={deleteCard}>
-            Eliminar
-          </button>
+          <ContextualToolbar
+            onEdit={() => setIsEditing(true)}
+            onDelete={handleDeleteCard}
+          />
         </>
       )}
     </div>
