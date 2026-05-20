@@ -1,15 +1,35 @@
 import { BoardProvider } from './context/boardContext'
+import { ToastProvider } from './context/ToastContext'
+import { useToast } from './context/ToastContext'
+import { ToastContainer } from './components/ui/Toast'
 import Board from './components/board/board'
 import './App.css'
 
-function App() {
+function AppContent() {
+  const { toasts, removeToast, triggerUndo } = useToast()
+
   return (
-    <BoardProvider>
+    <>
       <header className="app-header">
         <h1>TASKFLOW</h1>
       </header>
       <Board />
-    </BoardProvider>
+      <ToastContainer
+        toasts={toasts}
+        onDismiss={removeToast}
+        onUndo={triggerUndo}
+      />
+    </>
+  )
+}
+
+function App() {
+  return (
+    <ToastProvider>
+      <BoardProvider>
+        <AppContent />
+      </BoardProvider>
+    </ToastProvider>
   )
 }
 

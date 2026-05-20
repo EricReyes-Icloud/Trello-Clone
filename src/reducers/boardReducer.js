@@ -19,6 +19,34 @@ const boardReducer = (state, action) => {
         ...state,
         lists: state.lists.filter(
           (list) => list.id !== action.payload.id
+        ),
+        pendingDeletion: {
+          ...state.pendingDeletion,
+          [action.payload.id]: state.lists.find(
+            (list) => list.id === action.payload.id
+          )
+        }
+      };
+
+    case "RESTORE_LIST":
+      if (!state.pendingDeletion[action.payload.id]) return state;
+      return {
+        ...state,
+        lists: [...state.lists, state.pendingDeletion[action.payload.id]],
+        pendingDeletion: Object.fromEntries(
+          Object.entries(state.pendingDeletion).filter(
+            ([id]) => id !== action.payload.id
+          )
+        )
+      };
+
+    case "CONFIRM_DELETION":
+      return {
+        ...state,
+        pendingDeletion: Object.fromEntries(
+          Object.entries(state.pendingDeletion).filter(
+            ([id]) => id !== action.payload.id
+          )
         )
       };
 

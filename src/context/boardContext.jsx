@@ -11,7 +11,8 @@ const initialState = {
       title: "Por hacer",
       cards: []
     }
-  ]
+  ],
+  pendingDeletion: {}
 };
 
 export const BoardProvider = ({ children }) => {

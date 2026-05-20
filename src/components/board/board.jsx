@@ -36,6 +36,23 @@ function Board() {
     }
   }, [isAddingList]);
 
+  // Ctrl+L keyboard shortcut to add list
+  useEffect(() => {
+    const handleGlobalKeyDown = (e) => {
+      // Skip if typing in an input/textarea
+      const tag = e.target.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+
+      if ((e.ctrlKey || e.metaKey) && e.key === "l") {
+        e.preventDefault();
+        setIsAddingList(true);
+      }
+    };
+
+    document.addEventListener("keydown", handleGlobalKeyDown);
+    return () => document.removeEventListener("keydown", handleGlobalKeyDown);
+  }, []);
+
   return (
     <div className="board">
       {state.lists.map((list) => (
@@ -61,8 +78,9 @@ function Board() {
           />
         ) : (
           <button
-            className="btn-add-list"
+            className="btn-add-list btn-primary"
             onClick={() => setIsAddingList(true)}
+            title="Ctrl+L"
           >
             + Añadir lista
           </button>
