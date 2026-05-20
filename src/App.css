@@ -136,7 +136,8 @@
   padding-right: 52px;
 }
 
-.card-input {
+/* Textarea auto-resize */
+.textarea-auto {
   width: 100%;
   padding: 8px 10px;
   font-family: var(--font);
@@ -146,6 +147,59 @@
   outline: none;
   background: #fff;
   color: var(--text);
+  resize: none;
+  overflow: hidden;
+  transition: border-color 0.5s ease;
+}
+
+/* Feedback success animation */
+.feedback-success {
+  border-color: #10b981 !important;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
+}
+
+/* Edit buttons container */
+.edit-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* Save button */
+.btn-save {
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 500;
+  background: var(--focus-ring);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-save:hover {
+  background: #d4a02e;
+}
+
+/* Cancel button */
+.btn-cancel {
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 500;
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.btn-cancel:hover {
+  background: #e5e7eb;
+  border-color: #9ca3af;
 }
 
 .card-delete {
